@@ -1,0 +1,78 @@
+.habitos{
+    background-color: #F2F2F2;
+    
+    height: 100vh;
+}
+
+.habitos .header{
+    background-color: #126ba5;
+    color: #ffffff;
+    font-family: 'Playball', cursive;
+    font-size: 38px;
+    font-weight: 400;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0px 4px 4px 0px #00000026;
+
+    position: fixed;
+    top: 0%;
+    width: 100vw;
+    height: 70px;
+    padding: 18px;
+}
+.habitos .header img{
+    border-radius: 99px;
+
+    width: 51px;
+    height: 51px;
+}
+
+.habitos .meusHabitos{
+    color: #666666;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+
+    height: 100vh;
+    padding-top: 98px;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+
+.habitos .meusHabitos .menu{
+    color: #126ba5;
+    font-size: 22px;
+    font-weight: 400;
+
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 28px;
+}
+
+.habitos .footer{
+    background-color: #ffffff;
+    color: #52b6ff;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    position: fixed;
+    bottom: 0%;
+    width: 100vw;
+    height: 70px;
+}
+.habitos .footer .buttonHabitos{
+    cursor: pointer;
+}
+
+.habitos .footer .buttonHistorico{
+    cursor: pointer;
+}
