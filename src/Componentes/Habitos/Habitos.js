@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import "./styles.css"
 
@@ -17,10 +17,15 @@ export default function Habitos ({user}) {
 }
 
 function Header ({image}) {
+    const navigate = useNavigate()
+    function logoff () {
+        navigate("/")
+    }
     return (
         <div className="header">
-            TrackIt
             <img src={image} alt="imagem de perfil"/>
+            TrackIt
+            <ion-icon name="log-out-outline" onClick={() => logoff()} ></ion-icon>
         </div>
     )
 }
@@ -41,6 +46,7 @@ function AdicionarHabitos ({token}) {
 }
 
 function CriarHabito ({adicionar, setAdicionar, token}) {
+    const navigate = useNavigate()
     const [habito, setHabito] = useState("")
     const dias = []
     const semana = [
@@ -75,6 +81,7 @@ function CriarHabito ({adicionar, setAdicionar, token}) {
             const {data} = response
             console.log(data)
             setAdicionar(false)
+            navigate("/loading")
         })
         promise.catch(err => {
             let frase = `Erro ${err.response.status}, ${err.response.data.message} `
@@ -151,6 +158,7 @@ function ListaHabitos ({token, temHabitos, setTemHabitos}) {
 }
 
 function HabitosCriados ({id, name, days, token}) {
+    const navigate = useNavigate()
     const semana = [
         {dia: "domingo", sigla: "D", numero:0},
         {dia: "segunda", sigla: "S", numero:1},
@@ -182,6 +190,7 @@ function HabitosCriados ({id, name, days, token}) {
         promise.then( response => {
             <ListaHabitos />
             console.log(response)
+            navigate("/loading")
         })
         promise.catch(err => {
             console.log("erro ao remover")

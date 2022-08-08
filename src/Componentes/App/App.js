@@ -5,6 +5,7 @@ import Register from "../Register/Register"
 import Habitos from "../Habitos/Habitos"
 import Hoje from "../Hoje/Hoje"
 import Historico from "../Historico/Historico"
+import Loading from "../Loading/loading"
 
 
 import "./reset.css"
@@ -23,6 +24,7 @@ export default function App(){
                 <Route path="/habitos" element={<Habitos user={user} />} />
                 <Route path="/hoje" element={<Hoje user={user} />} />
                 <Route path="/historico" element={<Historico user={user} />} />
+                <Route path="/loading" element={<Loading />}/>
             </Routes>
             
         
