@@ -1,0 +1,55 @@
+.historico {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-color: #E5E5E5;
+}
+.historico .header {
+    width: 100%;
+    height: 70px;
+
+    background-color: #126BA5;
+    box-shadow: 0px 4px 4px 0px #00000026;
+
+    font-family: "Playball";
+    font-size: 39px;
+    font-weight: 400;
+    color: #FFFFFF;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 18px;
+
+    position: fixed;
+    top: 0;
+}
+.historico .header img {
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    
+}
+
+.historico .titulo{
+    font-family: "Lexend Deca";
+    font-size: 23px;
+    font-weight: 400;
+    color: #126BA5;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 98px 17px 28px 17px;
+}
+
+.historico .meuHistorico{
+    color: #666666;
+    font-family: 'Lexend Deca';
+    font-size: 18px;
+    font-weight: 400;
+
+    padding: 0 17px;
+}
+

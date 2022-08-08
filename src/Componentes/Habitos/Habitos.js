@@ -1,187 +1,222 @@
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar"
-import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
 import axios from "axios"
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 
 import "./styles.css"
 
-export default function Habitos({user}){
-    const [adcionar, setAdcionar] = useState(false)
-
+export default function Habitos ({user}) {
+    const [temHabitos, setTemHabitos] = useState({})
     return (
         <div className="habitos">
-            <Header user={user}/>
-            <MeusHabitos adcionar={adcionar} setAdcionar={setAdcionar}/>
-            <CriarHabito user={user} adcionar={adcionar} setAdcionar={setAdcionar} />
-            <ListaHabitos user={user}/>
+            <Header image={user.image} />
+            <AdicionarHabitos token={user.token}/>
+            <ListaHabitos token={user.token} temHabitos={temHabitos} setTemHabitos={setTemHabitos}/>
             <Footer />
         </div>
     )
 }
 
-function Header({user}){
-    console.log(user.image)
-    return(
+function Header ({image}) {
+    return (
         <div className="header">
-            Trackit
-            <img src={user.image} alt="perfil" />
+            TrackIt
+            <img src={image} alt="imagem de perfil"/>
         </div>
     )
 }
 
-function MeusHabitos({adcionar, setAdcionar}){
-    return(
-        <div className="meusHabitos">
-            <div className="menu">
-                Meus Habitos
-                <div className="button" onClick={() => setAdcionar(true)}>+</div>
-                {adcionar ?
-                    <CriarHabito /> : ""
-                }
-            </div>
-        </div>
-    )
-}
-
-function CriarHabito({user, adcionar, setAdcionar}){
-    const [habito, setHabito] = useState("")
-    const [dias, setDias] = useState([])
-
-    const semana = [
-        {dia: "domingo", sigla: "D", numero: 0},
-        {dia: "segunda", sigla: "S", numero: 1},
-        {dia: "terça", sigla: "T", numero: 2},
-        {dia: "quarta", sigla: "Q", numero: 3},
-        {dia: "quinta", sigla: "Q", numero: 4},
-        {dia: "sexta", sigla: "S", numero: 5},
-        {dia: "sábado", sigla: "S", numero: 6},
-    ]
-
-    function Salvar({user}){
-        const config = {
-            headers: {
-                Authorization: `Baarer ${user}`
-            }
-        }
-
-        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
-        const body = {
-            name: habito,
-            days: [dias]
-        }
-
-        const promise = axios.post(url, body, config)
-        promise.then(response => {
-            const {data} = response
-            console.log(data)
-            setAdcionar(false) 
-        })
-        promise.catch(err => {
-            let frase = `Erro ${err.response.status}, ${err.response.data.message}`
-            alert(frase)
-        })
-    }
-
-    return(
+function AdicionarHabitos ({token}) {
+    const [adicionar, setAdicionar] = useState(false)
+    return (
         <>
-            {adcionar ?
-                <div className="criarHabito">
-                    <input type="text" placeholder="nome do habito" value={habito} onChange={(e) => setHabito(e.target.value)} />
-                    <div className="semana">
-                        {semana.map(dia => <Botao siglas={dia.sigla} numero={dia.numero} setDias={setDias} /> )}
-                    </div>
-                    <div className="acoes">
-                        <button className="cancelar" onClick={() => setAdcionar(false)}>Cancelar</button>
-                        <button className="salvar" onClick={() => Salvar()}>Salvar</button>
-                    </div>
-                </div>
-                    : ""
-            }
+            <div className="titulo">
+                <p>Meus Hábitos</p>
+                <button onClick={() => setAdicionar(true)}>+</button>
+            </div>
+            {adicionar ? 
+                <CriarHabito adicionar={adicionar} setAdicionar={setAdicionar} token={token}/> : "" 
+        }
         </>
     )
 }
 
+function CriarHabito ({adicionar, setAdicionar, token}) {
+    const [habito, setHabito] = useState("")
+    const dias = []
+    const semana = [
+        {dia: "domingo", sigla: "D", numero:0},
+        {dia: "segunda", sigla: "S", numero:1},
+        {dia: "terça", sigla: "T", numero:2},
+        {dia: "quarta", sigla: "Q", numero:3},
+        {dia: "quinta", sigla: "Q", numero:4},
+        {dia: "sexta", sigla: "S", numero:5},
+        {dia: "sábado", sigla: "S", numero:6}
+    ]
 
-function Botao({sigla, numero, setDias}){
-    const [selecionar, setSelecionar] = useState(false)
-    if(selecionar === true){
-        setDias(numero)
+    function Salvar() {
+        let days = []
+        for (let i = 0; i < 7; i++) {
+            if (dias.includes(i)) {
+              days.push(i)
+            }
+        }
+        const config = {
+            headers: { 
+                Authorization: `Bearer ${token}`
+            }
+        }
+        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+        const body = {
+            name: habito,
+            days: days
+        }
+        const promise = axios.post(url, body, config)
+        promise.then( response => {
+            const {data} = response
+            console.log(data)
+            setAdicionar(false)
+        })
+        promise.catch(err => {
+            let frase = `Erro ${err.response.status}, ${err.response.data.message} `
+            alert(frase)
+        })
     }
+    
+    return (
+        <>
+        {adicionar ? 
+            <div className="criar-habito">
+                <input type="text" placeholder="nome do hábito" value={habito} onChange={(e) => setHabito(e.target.value)} />
+                <div className="semana">
+                    {semana.map(dia => <Botao key={dia.numero} sigla={dia.sigla} numero={dia.numero} dias={dias} /> )}
+                </div>
+                <div className="acoes">
+                    <button className="cancelar" onClick={() => setAdicionar(false)}>Cancelar</button>
+                    <button className="salvar" onClick={() => Salvar()}>Salvar</button>
+                </div>
+            </div> 
+            : ""
+        }
+        </>
+    )
+}
 
+function Botao ({sigla, numero, dias}) {
+    const [selecionar, setSelecionar] = useState(false)
+    if(selecionar === true) {
+        dias.push(numero)
+    }
+    
     let css = `${selecionar}`
-    return(
-        <button className={css} onCLick={() => setSelecionar(!selecionar) }>
+    return (
+        <button className={css} onClick={() => setSelecionar(!selecionar)}>
             {sigla}
         </button>
     )
 }
 
-function ListaHabitos({user, habitos}){
-    const [temHabitos, setTemHabitos] = useState(false)
-
+function ListaHabitos ({token, temHabitos, setTemHabitos}) {
     useEffect(() => {
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
         const config = {
             headers: {
-                Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${token}`
             }
         }
         const promise = axios.get(url, config)
         promise.then( response => {
-            const data = response
+            const {data} = response
             setTemHabitos(data)
         })
         promise.catch(err => {
-            console.log(`Erro ${err.response.status}, ${err.response.data.message}`)
+            console.log(`Erro ${err.response.status}, ${err.response.data.message} `)
         })
+        
     }, [])
 
-    return(
+    console.log(temHabitos, temHabitos > temHabitos.length)
+    return (
         <>
-            {temHabitos ?
-                <>
-                    {/* {habitos.map(habitos => <HabitosCriados id={habitos.id} name={habitos.name} days={habitos.days}/>)} */}
-                </>
-                :
-                <div className="lista-de-habitos">
-                    Você não tem nenhum hábito cadastrado ainda.
-                    Adicione um hábito para começar a trackear!
-                </div>
+        {temHabitos.length > 0 ?
+            <div className="listaHabitos">
+                {temHabitos.map(habito => <HabitosCriados id={habito.id} name={habito.name} days={habito.days} key={habito.id} token={token}/>)}
+            </div> : 
+            <div className="lista-de-habitos">0
+                Você não tem nenhum hábito <br/> cadastrado ainda. 
+                Adicione um hábito <br/> para começar a trackear!
+            </div>
             }
         </>
     )
+}
+
+function HabitosCriados ({id, name, days, token}) {
+    const semana = [
+        {dia: "domingo", sigla: "D", numero:0},
+        {dia: "segunda", sigla: "S", numero:1},
+        {dia: "terça", sigla: "T", numero:2},
+        {dia: "quarta", sigla: "Q", numero:3},
+        {dia: "quinta", sigla: "Q", numero:4},
+        {dia: "sexta", sigla: "S", numero:5},
+        {dia: "sábado", sigla: "S", numero:6}
+    ]
+    console.log(id, name, days)
+    return (
+        <div className="card">
+            <p>{name}</p>
+            <ion-icon name="trash-outline" onClick={() => DeletarHabito()} ></ion-icon>
+            <div className="dias-da-semana">
+                {semana.map(dia => <DiasDaSemana sigla={dia.sigla} numero={dia.numero} days={days} key={dia.numero} />)}
+            </div>
+        </div>
+    )
+    function DeletarHabito(){
+        const config = {
+            headers : {
+                Authorization : `Bearer ${token}`
+            }
+        }
+        console.log(config)
+        console.log(id)
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+        promise.then( response => {
+            <ListaHabitos />
+            console.log(response)
+        })
+        promise.catch(err => {
+            console.log("erro ao remover")
+        })
+    }    
 
 }
 
-function HabitosCriados(){
-    return(
-        <div>
-            Aqui tem um hábito
+function DiasDaSemana ({sigla, numero, days}) {
+    let css = "dia"
+    if (days.includes(numero)) {
+        css = "dia selecionado"
+    }
+    return (
+        <div className={css}>
+            {sigla}
         </div>
     )
 }
 
-
-
-function Footer(){
-    const percentage = 66
-    const navigate = useNavigate()
-
-    return(
+function Footer () {
+    return (
         <div className="footer">
+            <Link to="/habitos">Hábitos</Link>
+            <Link to="/hoje"> <Hoje /> </Link>
+            <Link to="/historico">Histórico</Link>
+        </div>
+    )
+}
 
-            <div className="buttonHabitos" onClick={() => navigate("/habitos") }>Habitos</div>
-
-            <CircularProgressbar value={percentage} text="Hoje" styles={buildStyles({
-                strokeLinecap: 'butt',
-                pathTransitionDuration: 0.5,
-                pathColor: 'rgba(82, 182, 255, 1)',
-                textColor: 'black',
-                trailColor: 'transparent',
-                backgroundColor: '#52b6ff',
-            })}/>
-
-            <div className="buttonHistorico" onClick={() => navigate("/historico") }  >Hitórico</div>
+function Hoje () {
+    return (
+        <div className="hoje">
+            <p>Hoje</p>
+            {/* <img src={semiCirculo} alt="semicirculo" /> */}
         </div>
     )
 }

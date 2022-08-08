@@ -1,78 +1,270 @@
-.habitos{
-    background-color: #F2F2F2;
-    
+.habitos {
+    width: 100%;
     height: 100vh;
+    position: relative;
+    background-color: #E5E5E5;
 }
+.habitos .header {
+    width: 100%;
+    height: 70px;
 
-.habitos .header{
-    background-color: #126ba5;
-    color: #ffffff;
-    font-family: 'Playball', cursive;
-    font-size: 38px;
-    font-weight: 400;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+    background-color: #126BA5;
     box-shadow: 0px 4px 4px 0px #00000026;
 
-    position: fixed;
-    top: 0%;
-    width: 100vw;
-    height: 70px;
-    padding: 18px;
-}
-.habitos .header img{
-    border-radius: 99px;
-
-    width: 51px;
-    height: 51px;
-}
-
-.habitos .meusHabitos{
-    color: #666666;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 17px;
+    font-family: "Playball";
+    font-size: 39px;
     font-weight: 400;
-
-    height: 100vh;
-    padding-top: 98px;
-    margin-left: 18px;
-    margin-right: 18px;
-}
-
-.habitos .meusHabitos .menu{
-    color: #126ba5;
-    font-size: 22px;
-    font-weight: 400;
+    color: #FFFFFF;
 
     display: flex;
     justify-content: space-between;
-
-    margin-top: 28px;
-}
-
-.habitos .footer{
-    background-color: #ffffff;
-    color: #52b6ff;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-
-    display: flex;
-    justify-content: space-around;
     align-items: center;
+    padding: 0 18px;
 
     position: fixed;
-    bottom: 0%;
-    width: 100vw;
-    height: 70px;
+    top: 0;
 }
-.habitos .footer .buttonHabitos{
-    cursor: pointer;
+.habitos .header img {
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    
 }
 
-.habitos .footer .buttonHistorico{
-    cursor: pointer;
+.habitos .titulo {
+    font-family: "Lexend Deca";
+    font-size: 23px;
+    font-weight: 400;
+    color: #126BA5;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 98px 17px 28px 17px;
+}
+.habitos .titulo button {
+    width: 40px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #52B6FF;
+    
+    font-size: 27px;
+    color: #FFFFFF;
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.habitos .lista-de-habitos {
+    font-family: "Lexend Deca";
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+
+    padding: 0 17px;
+}
+
+.habitos .criar-habito {
+    height: 180px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    padding: 18px 19px;
+    margin: 0 17px;
+    margin-bottom: 29px;
+}
+.habitos .criar-habito input {
+    width: 303px;
+    height: 45px;
+    background-color: #FFFFFF;
+    border: 1px solid #D4D4D4;
+
+    font-family: "Lexend Deca";
+    font-size: 20px;
+    font-weight: 400;
+    color: #DBDBDB;
+
+    display: flex;
+    padding: 9px 11px;
+}
+.habitos .criar-habito input::placeholder {
+    color: #DBDBDB;
+}
+.habitos .criar-habito .semana {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+.habitos .criar-habito .semana button {
+    width: 30px;
+    height: 30px;
+    background-color: #FFFFFF;
+
+    font-family: "Lexend Deca";
+    font-size: 20px;
+    font-weight: 400;
+    color: #DBDBDB;    
+    
+    border-radius: 5px;
+    border: 1px solid #D4D4D4;
+}
+.habitos .criar-habito .semana .true {
+    background-color: #CFCFCF;
+    color: #FFFFFF;
+}
+.habitos .criar-habito .acoes {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 29px;
+    gap: 23px;
+}
+.habitos .criar-habito .cancelar {
+    height: 35px;
+
+    font-family: "Lexend Deca";
+    font-size: 16px;
+    font-weight: 400;
+    color: #52B6FF;
+
+    background-color: #FFFFFF;
+    border: none;
+}
+.habitos .criar-habito .salvar {
+    height: 35px;
+    background-color: #52B6FF;
+    border-radius: 5px;
+    border: none;
+
+    font-family: "Lexend Deca";
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFFFFF;  
+    
+    display: flex;
+    padding: 0 17px;
+    justify-content: center;
+    align-items: center;
+}
+
+.habitos .listaHabitos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 18px;
+
+    gap: 10px;
+}
+
+.habitos .card {
+    background-color: #FFFFFF;
+    color: #666666;
+    font-family: 'Lexend Deca';
+    font-size: 20px;
+    font-weight: 400;
+    
+    display:flex;
+    flex-direction:column;
+    position: relative;
+    
+    border-radius: 5px;
+    
+    width: 100%;
+    height: 91px;
+    padding: 15px;
+}
+
+.habitos .card ion-icon {
+    position: absolute;
+    color: #666666;
+    right: 10px;
+    top: 10px;
+}
+
+.habitos .dias-da-semana {
+    display: flex;
+    flex-direction: row;
+    
+    gap: 4px;
+    margin-top: 12px;
+}
+
+.habitos .dia {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #D4D4D4;
+    background-color: #FFFFFF;
+    color: #D4D4D4;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.habitos .selecionado {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    background-color: #CFCFCF;
+    color: #FFFFFF;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    width: 100vw;
+    height: 70px;
+    background-color: #FFFFFF;
+    
+    display: flex;
+    padding: 0 36px;
+    justify-content: space-between;
+    align-items: center;
+    
+    position: fixed;
+    bottom: 0;
+}
+.footer a:-webkit-any-link {
+    font-family: "Lexend Deca";
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    color: #52B6FF;
+}
+.footer .hoje {
+    width: 91px;
+    height: 91px;
+    background-color: #52B6FF;
+    border-radius: 50%;
+    
+    position: relative;
+    bottom: 20px;
+    color: #FFFFFF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer .hoje p {
+    margin-bottom: 4px;
+    margin-right: 5px;
+}
+/* 
+.footer .hoje img {
+    margin-left: 9px;
+    position: absolute;
+} */
+
+.habitos .button{
+    width: 100px;
+    background-color: crimson;
 }
